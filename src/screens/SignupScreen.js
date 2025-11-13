@@ -1,43 +1,44 @@
-import {
-  ActivityIndicator,
-  Alert,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import Colors from "../theme/colors";
 import { Link } from "@react-navigation/native";
 import { useState } from "react";
-import { useMutation } from "@apollo/client/react";
-import { LOGIN_MUTATION } from "../api/mutations";
-import Constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
-import * as SecureStore from "expo-secure-store";
+import { useMutation } from "@apollo/client/react";
+import { Register_Mutation } from "../api/mutations";
+import Constants from "expo-constants";
 
-const LoginScreen = ({ navigation }) => {
+const SignupScreen = ({ navigation }) => {
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPasswod] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [login, { loading, error }] = useMutation(LOGIN_MUTATION);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [localError, setLocalError] = useState("");
   const APP_SECRET = Constants.expoConfig.extra.APP_SECRET;
-  const handleLogin = async () => {
-    if (!email && !password) {
-      Alert.alert("Please Enter email and password.");
+  const [signup, { loading, error }] = useMutation(Register_Mutation);
+  const hanldeSignup = async () => {
+    const registrationInput = {
+      fullName: fullName,
+      password: password,
+      primaryEmail: email,
+    };
+    setLocalError("");
+    if (password !== confirmPassword) {
+      setLocalError("Passwords do not match");
       return;
     }
     try {
-      const { data } = await login({
+      const { data } = await signup({
         variables: {
           appSecret: APP_SECRET,
-          username: email,
-          password: password,
+          registrationInput: registrationInput,
         },
       });
-      if (data.authLogin.userToken) {
-        await SecureStore.setItemAsync("userToken", data.authLogin.userToken);
-        navigation.navigate("Home", { user: data.authLogin });
+      console.log(data);
+      if (data.registrationCreate.id) {
+        navigation.navigate("Verification");
       }
     } catch (error) {
       console.log(error);
@@ -45,67 +46,85 @@ const LoginScreen = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Signup</Text>
       <Text style={styles.agreement}>
         This is done to ensure the security of your account. By clicking on the
-        "Login" button, you are indicating your agreement with our{" "}
+        "Signup" button, you are indicating your agreement with our{" "}
         <Link>terms and conditions.</Link>
       </Text>
       <TextInput
+        placeholder="Full Name"
+        value={fullName}
+        onChangeText={setFullName}
         style={styles.input}
-        placeholder="Email"
         placeholderTextColor={Colors.charcoal}
+        autoCapitalize="words"
+      />
+      <TextInput
+        placeholder="Email"
         value={email}
         onChangeText={setEmail}
-        autoCapitalize="none"
+        style={styles.input}
         keyboardType="email-address"
+        autoCapitalize="none"
+        placeholderTextColor={Colors.charcoal}
       />
       <View style={{ position: "relative" }}>
         <TextInput
-          style={styles.input}
           placeholder="Password"
-          placeholderTextColor={Colors.charcoal}
           value={password}
           onChangeText={setPassword}
+          placeholderTextColor={Colors.charcoal}
           secureTextEntry={!showPassword}
+          style={styles.input}
         />
         <TouchableOpacity
-          style={styles.eyeIcon}
           onPress={() => setShowPassword((prev) => !prev)}
+          style={styles.eyeIcon}
         >
           <Ionicons
+            name={showPassword ? "eye-off" : "eye"}
             size={24}
             color={Colors.charcoal}
-            name={showPassword ? "eye-off" : "eye"}
           />
         </TouchableOpacity>
       </View>
+      <View style={{ position: "relative" }}>
+        <TextInput
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChangeText={setConfirmPasswod}
+          placeholderTextColor={Colors.charcoal}
+          secureTextEntry={!showConfirmPassword}
+          style={styles.input}
+        />
+        <TouchableOpacity
+          onPress={() => setShowConfirmPassword((prev) => !prev)}
+          style={styles.eyeIcon}
+        >
+          <Ionicons
+            name={showConfirmPassword ? "eye-off" : "eye"}
+            size={24}
+            color={Colors.charcoal}
+          />
+        </TouchableOpacity>
+      </View>
+      {!!localError && <Text style={styles.errorText}>{localError}</Text>}
       {!!error && <Text style={styles.errorText}>{error.message}</Text>}
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => handleLogin()}
-        disabled={loading}
-      >
-        {loading ? (
-          <ActivityIndicator color="white" />
-        ) : (
-          <Text style={styles.primaryButtonText}>Login</Text>
-        )}
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.primaryButtonText}>Signup</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.Secondarybutton}
-        onPress={() => navigation.navigate("Signup")}
+        onPress={() => navigation.navigate("Login")}
       >
-        <Text style={styles.secondaryButtonText}>Signup</Text>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <Text style={styles.forgotPassword}>Forgot Password?</Text>
+        <Text style={styles.secondaryButtonText}>Login</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default LoginScreen;
+export default SignupScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -170,13 +189,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 500,
     color: Colors.charcoal,
-  },
-  forgotPassword: {
-    textAlign: "center",
-    fontSize: 18,
-    color: Colors.russoGreen,
-    fontWeight: 600,
-    marginTop: 8,
   },
   errorText: {
     color: Colors.error,

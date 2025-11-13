@@ -23,7 +23,7 @@ export default function SplashScreen({ onAnimationEnd }) {
   }, []);
   return (
     <View style={styles.container}>
-      <Animated.Text style={[styles.text, { opacity }]}>Russo</Animated.Text>
+      <Animated.Text style={[styles.text, { opacity }]}>RUSSO</Animated.Text>
     </View>
   );
 }

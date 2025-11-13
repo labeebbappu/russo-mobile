@@ -4,6 +4,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import LoginScreen from "../screens/LoginScreen";
 import HomeScreen from "../screens/HomeScreen";
 import GatewayScreen from "../screens/GatewayScreen";
+import SignupScreen from "../screens/SignupScreen";
+import VerificationScreen from "../screens/VerificationScreen";
 
 const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
@@ -32,6 +34,20 @@ const AppNavigator = () => {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={SignupScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Verification"
+          component={VerificationScreen}
           options={{
             headerShown: false,
           }}
