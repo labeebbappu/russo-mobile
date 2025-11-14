@@ -61,3 +61,73 @@ export const Auth_Verification = gql`
     }
   }
 `;
+
+export const Resend_Verification = gql`
+  mutation RegistrationResendVerification(
+    $appSecret: String!
+    $primaryEmail: String!
+  ) {
+    registrationResendVerification(
+      appSecret: $appSecret
+      primaryEmail: $primaryEmail
+    )
+  }
+`;
+
+export const Code_Verification = gql`
+  mutation RegistrationVerifyEmail(
+    $appSecret: String!
+    $primaryEmail: String!
+    $verificationCode: String!
+  ) {
+    registrationVerifyEmail(
+      appSecret: $appSecret
+      primaryEmail: $primaryEmail
+      verificationCode: $verificationCode
+    ) {
+      id
+      fullName
+      primaryEmail
+      primaryPhone
+      registrationType
+      verificationStatus
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const Forget_Password = gql`
+  mutation AuthForgetPasswordRequest($appSecret: String!, $username: String!) {
+    authForgetPasswordRequest(appSecret: $appSecret, username: $username) {
+      username
+      verificationCode
+      verificationStatus
+      verificationCodeExpiresAt
+    }
+  }
+`;
+
+export const Reset_Password = gql`
+  mutation AuthForgetPasswordVerifyAndChange(
+    $appSecret: String!
+    $username: String!
+    $verificationCode: String!
+    $newPassword: String!
+  ) {
+    authForgetPasswordVerifyAndChange(
+      appSecret: $appSecret
+      username: $username
+      verificationCode: $verificationCode
+      newPassword: $newPassword
+    ) {
+      fullName
+      username
+      role
+      tockenType
+      createdAt
+      expiryAt
+    }
+  }
+`;

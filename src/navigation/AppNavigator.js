@@ -6,6 +6,7 @@ import HomeScreen from "../screens/HomeScreen";
 import GatewayScreen from "../screens/GatewayScreen";
 import SignupScreen from "../screens/SignupScreen";
 import VerificationScreen from "../screens/VerificationScreen";
+import ForgetPasswordScreen from "../screens/ForgetPasswordScreen";
 
 const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
@@ -48,6 +49,13 @@ const AppNavigator = () => {
         <Stack.Screen
           name="Verification"
           component={VerificationScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="ForgetPassword"
+          component={ForgetPasswordScreen}
           options={{
             headerShown: false,
           }}

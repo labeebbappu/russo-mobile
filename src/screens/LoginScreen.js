@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Colors from "../theme/colors";
 import { Link } from "@react-navigation/native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client/react";
 import { LOGIN_MUTATION } from "../api/mutations";
 import Constants from "expo-constants";
@@ -23,10 +23,15 @@ const LoginScreen = ({ navigation }) => {
   const [login, { loading, error }] = useMutation(LOGIN_MUTATION);
   const APP_SECRET = Constants.expoConfig.extra.APP_SECRET;
   const handleLogin = async () => {
-    if (!email && !password) {
-      Alert.alert("Please Enter email and password.");
+    if (!email) {
+      Alert.alert("Please enter your email.");
       return;
     }
+    if (!password) {
+      Alert.alert("Please enter your password.");
+      return;
+    }
+
     try {
       const { data } = await login({
         variables: {
@@ -59,6 +64,8 @@ const LoginScreen = ({ navigation }) => {
         onChangeText={setEmail}
         autoCapitalize="none"
         keyboardType="email-address"
+        autoCorrect={false}
+        returnKeyType="next"
       />
       <View style={{ position: "relative" }}>
         <TextInput
@@ -68,7 +75,12 @@ const LoginScreen = ({ navigation }) => {
           value={password}
           onChangeText={setPassword}
           secureTextEntry={!showPassword}
+          autoCapitalize="none"
+          autoCorrect={false}
+          returnKeyType="done"
+          textContentType="password"
         />
+
         <TouchableOpacity
           style={styles.eyeIcon}
           onPress={() => setShowPassword((prev) => !prev)}
@@ -85,6 +97,7 @@ const LoginScreen = ({ navigation }) => {
         style={styles.button}
         onPress={() => handleLogin()}
         disabled={loading}
+        accessibilityLabel="Login button"
       >
         {loading ? (
           <ActivityIndicator color="white" />
@@ -98,7 +111,7 @@ const LoginScreen = ({ navigation }) => {
       >
         <Text style={styles.secondaryButtonText}>Signup</Text>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("ForgetPassword")}>
         <Text style={styles.forgotPassword}>Forgot Password?</Text>
       </TouchableOpacity>
     </View>
