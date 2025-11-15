@@ -67,7 +67,15 @@ const SignupScreen = ({ navigation }) => {
         <Text style={styles.agreement}>
           This is done to ensure the security of your account. By clicking on
           the "Signup" button, you are indicating your agreement with our{" "}
-          <Link>terms and conditions.</Link>
+          <Text
+            style={{
+              color: Colors.russoGreen,
+              textDecorationLine: "underline",
+            }}
+            onPress={() => Linking.openURL("https://your-terms-url.com")}
+          >
+            terms and conditions.
+          </Text>
         </Text>
         <TextInput
           placeholder="Full Name"

@@ -2,6 +2,8 @@
   "expo": {
     "name": "russo-mobile",
     "slug": "russo-mobile",
+    "owner": "mohamedsuhail065",
+    "projectId": "5cc9266f-9dc4-486b-8e3c-82f8e181e0e8",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,6 +26,13 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "GRAPHQL_URL": "https://hrm360.primoinnovations.com/gql-point",
+      "APP_SECRET": "J0K1L2M3NA1B2C3D97R8S9T8U1V4E42W3X4Y5Z",
+      "eas": {
+        "projectId": "5cc9266f-9dc4-486b-8e3c-82f8e181e0e8"
+      }
     }
   }
 }

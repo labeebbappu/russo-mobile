@@ -1,6 +1,7 @@
 import { Link } from "@react-navigation/native";
 import {
-    Platform,
+  Alert,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -9,7 +10,7 @@ import {
   View,
 } from "react-native";
 import Colors from "../theme/colors";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client/react";
 import { Forget_Password, Reset_Password } from "../api/mutations";
 import Constants from "expo-constants";
@@ -25,6 +26,7 @@ const ForgetPasswordScreen = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [reset, { loading: resetLoading, error: resetError }] =
     useMutation(Reset_Password);
+  const [localError, setLocalError] = useState("");
   const APP_SECRET = Constants.expoConfig.extra.APP_SECRET;
   const handleCode = async () => {
     const { data } = await sendCode({
@@ -39,6 +41,13 @@ const ForgetPasswordScreen = ({ navigation }) => {
     }
   };
   const handleReset = async () => {
+    if (!password) {
+      setLocalError("Please enter a password");
+      return;
+    } else if (password.length < 4) {
+      setLocalError("Please enter atleast 4 characters in password");
+      return;
+    }
     const { data } = await reset({
       variables: {
         appSecret: APP_SECRET,
@@ -51,6 +60,13 @@ const ForgetPasswordScreen = ({ navigation }) => {
       navigation.replace("Login");
     }
   };
+  useEffect(() => {
+    setLocalError("");
+  }, [password]);
+  function formatOtpInput(text) {
+    const digits = text.replace(/\D/g, "");
+    return digits.replace(/(\d{2})(?=\d)/g, "$1 ");
+  }
   return (
     <KeyboardAvoidingView
       style={{ flex: 1, backgroundColor: Colors.offWhite }}
@@ -65,7 +81,15 @@ const ForgetPasswordScreen = ({ navigation }) => {
         <Text style={styles.agreement}>
           This is done to ensure the security of your account. By clicking on
           the "Reset" button, you are indicating your agreement with our{" "}
-          <Link>terms and conditions.</Link>
+          <Text
+            style={{
+              color: Colors.russoGreen,
+              textDecorationLine: "underline",
+            }}
+            onPress={() => Linking.openURL("https://your-terms-url.com")}
+          >
+            terms and conditions.
+          </Text>
         </Text>
         <TextInput
           style={styles.input}
@@ -109,7 +133,7 @@ const ForgetPasswordScreen = ({ navigation }) => {
               placeholder="Verification code"
               placeholderTextColor={Colors.charcoal}
               value={verificationCode}
-              onChangeText={setVerificationCode}
+              onChangeText={(text) => setVerificationCode(formatOtpInput(text))}
               keyboardType="number-pad"
               style={styles.input}
             />
@@ -119,14 +143,37 @@ const ForgetPasswordScreen = ({ navigation }) => {
         {!!resetError && (
           <Text style={styles.errorText}>{resetError.message}</Text>
         )}
+        {!!localError && <Text style={styles.errorText}>{localError}</Text>}
         {showCode ? (
-          <TouchableOpacity style={styles.button} onPress={() => handleReset()}>
-            <Text style={styles.primaryButtonText}>Reset Password</Text>
-          </TouchableOpacity>
+          <View style={{ flexDirection: "row" }}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleReset()}
+            >
+              <Text style={styles.primaryButtonText}>Reset Password</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.Secondarybutton}
+              onPress={() => navigation.replace("Login")}
+            >
+              <Text style={styles.secondaryButtonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
         ) : (
-          <TouchableOpacity style={styles.button} onPress={() => handleCode()}>
-            <Text style={styles.primaryButtonText}>Send Code</Text>
-          </TouchableOpacity>
+          <View style={{ flexDirection: "row", gap: 12 }}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleCode()}
+            >
+              <Text style={styles.primaryButtonText}>Send Code</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.Secondarybutton}
+              onPress={() => navigation.replace("Login")}
+            >
+              <Text style={styles.secondaryButtonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
         )}
       </ScrollView>
     </KeyboardAvoidingView>
@@ -178,12 +225,28 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.russoGreen,
     marginTop: 8,
     paddingVertical: 12,
+    paddingHorizontal: 8,
   },
   primaryButtonText: {
     textAlign: "center",
     fontSize: 18,
     fontWeight: 500,
     color: "white",
+  },
+  Secondarybutton: {
+    borderRadius: 8,
+    backgroundColor: Colors.whiteSmoke,
+    marginTop: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    borderWidth: 1,
+    borderColor: "#ccc",
+  },
+  secondaryButtonText: {
+    textAlign: "center",
+    fontSize: 18,
+    fontWeight: 500,
+    color: Colors.charcoal,
   },
   errorText: {
     color: Colors.error,

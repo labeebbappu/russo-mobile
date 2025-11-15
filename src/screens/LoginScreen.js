@@ -1,6 +1,7 @@
 import {
   ActivityIndicator,
   Alert,
+  Linking,
   StyleSheet,
   Text,
   TextInput,
@@ -21,7 +22,8 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [login, { loading, error }] = useMutation(LOGIN_MUTATION);
-  const APP_SECRET = Constants.expoConfig.extra.APP_SECRET;
+  // const APP_SECRET = Constants.expoConfig.extra.APP_SECRET;
+  const APP_SECRET = "J0K1L2M3NA1B2C3D97R8S9T8U1V4E42W3X4Y5Z";
   const handleLogin = async () => {
     if (!email) {
       Alert.alert("Please enter your email.");
@@ -54,7 +56,12 @@ const LoginScreen = ({ navigation }) => {
       <Text style={styles.agreement}>
         This is done to ensure the security of your account. By clicking on the
         "Login" button, you are indicating your agreement with our{" "}
-        <Link>terms and conditions.</Link>
+        <Text
+          style={{ color: Colors.russoGreen, textDecorationLine: "underline" }}
+          onPress={() => Linking.openURL("https://your-terms-url.com")}
+        >
+          terms and conditions.
+        </Text>
       </Text>
       <TextInput
         style={styles.input}
@@ -197,4 +204,5 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     fontWeight: "600",
   },
+  link: {},
 });

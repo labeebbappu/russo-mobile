@@ -62,6 +62,10 @@ const VerificationScreen = ({ route, navigation }) => {
       console.log(error);
     }
   };
+  function formatOtpInput(text) {
+    const digits = text.replace(/\D/g, "");
+    return digits.replace(/(\d{2})(?=\d)/g, "$1 ");
+  }
   return (
     <KeyboardAvoidingView
       style={{ flex: 1, backgroundColor: Colors.offWhite }}
@@ -76,7 +80,15 @@ const VerificationScreen = ({ route, navigation }) => {
         <Text style={styles.agreement}>
           This is done to ensure the security of your account. By clicking on
           the "Verify" button, you are indicating your agreement with our{" "}
-          <Link>terms and conditions.</Link>
+          <Text
+            style={{
+              color: Colors.russoGreen,
+              textDecorationLine: "underline",
+            }}
+            onPress={() => Linking.openURL("https://your-terms-url.com")}
+          >
+            terms and conditions.
+          </Text>
         </Text>
         <TextInput
           placeholder="Email"
@@ -91,7 +103,7 @@ const VerificationScreen = ({ route, navigation }) => {
           placeholder="Verification code"
           placeholderTextColor={Colors.charcoal}
           value={verificationCode}
-          onChangeText={setVerificationCode}
+          onChangeText={(text) => setVerificationCode(formatOtpInput(text))}
           keyboardType="number-pad"
           style={styles.input}
         />
