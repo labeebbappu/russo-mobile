@@ -2,7 +2,7 @@ require("dotenv").config();
 
 module.exports = {
   expo: {
-    name: "russo-mobile",
+    name: "Russo",
     slug: "russo-mobile",
     owner: "mohamedsuhail065",
     projectId: "5cc9266f-9dc4-486b-8e3c-82f8e181e0e8",

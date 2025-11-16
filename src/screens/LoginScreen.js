@@ -64,7 +64,7 @@ const LoginScreen = ({ navigation }) => {
         </Text>
       </Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: Colors.charcoal }]}
         placeholder="Email"
         placeholderTextColor={Colors.charcoal}
         value={email}
@@ -76,7 +76,7 @@ const LoginScreen = ({ navigation }) => {
       />
       <View style={{ position: "relative" }}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { color: Colors.charcoal }]}
           placeholder="Password"
           placeholderTextColor={Colors.charcoal}
           value={password}

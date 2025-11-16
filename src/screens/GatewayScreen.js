@@ -24,7 +24,7 @@ const GatewayScreen = ({ navigation }) => {
           });
           console.log(data);
           if (data.authVerify.userId) {
-            navigation.replace("Home", { token });
+            navigation.replace("Home", { user: data.authVerify });
           } else {
             navigation.replace("Login");
           }

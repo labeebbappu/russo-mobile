@@ -101,7 +101,7 @@ const SignupScreen = ({ navigation }) => {
             onChangeText={setPassword}
             placeholderTextColor={Colors.charcoal}
             secureTextEntry={!showPassword}
-            style={styles.input}
+            style={[styles.input, { color: Colors.charcoal }]}
           />
           <TouchableOpacity
             onPress={() => setShowPassword((prev) => !prev)}
@@ -121,7 +121,7 @@ const SignupScreen = ({ navigation }) => {
             onChangeText={setConfirmPasswod}
             placeholderTextColor={Colors.charcoal}
             secureTextEntry={!showConfirmPassword}
-            style={styles.input}
+            style={[styles.input, { color: Colors.charcoal }]}
           />
           <TouchableOpacity
             onPress={() => setShowConfirmPassword((prev) => !prev)}

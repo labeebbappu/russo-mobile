@@ -106,7 +106,7 @@ const ForgetPasswordScreen = ({ navigation }) => {
           <>
             <View style={{ position: "relative" }}>
               <TextInput
-                style={styles.input}
+                style={[styles.input, { color: Colors.charcoal }]}
                 placeholder="New Password"
                 placeholderTextColor={Colors.charcoal}
                 value={password}
