@@ -14,27 +14,29 @@ const GatewayScreen = ({ navigation }) => {
   useEffect(() => {
     if (!showSplash) {
       const checkAuth = async () => {
-        const token = await SecureStore.getItemAsync("userToken");
-        if (token) {
-          const { data } = await auth({
-            variables: {
-              appSecret: APP_SECRET,
-              userToken: token,
-            },
-          });
-          console.log(data);
-          if (data.authVerify.userId) {
-            navigation.replace("Home", { user: data.authVerify });
+        try {
+          const token = await SecureStore.getItemAsync("userToken");
+          if (token) {
+            const { data } = await auth({
+              variables: { appSecret: APP_SECRET, userToken: token },
+            });
+            console.log("AuthVerify response:", data);
+            if (data?.authVerify?.userId) {
+              navigation.replace("Home", { user: data.authVerify });
+            } else {
+              navigation.replace("Login");
+            }
           } else {
             navigation.replace("Login");
           }
-        } else {
+        } catch (err) {
+          console.log("Auth check error:", err);
           navigation.replace("Login");
         }
       };
       checkAuth();
     }
-  }, [showSplash, navigation]);
+  }, [showSplash]);
 
   if (showSplash) {
     return <SplashScreen onAnimationEnd={() => setShowSplash(false)} />;

@@ -1,12 +1,48 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Colors from "../theme/colors";
 import * as SecureStore from "expo-secure-store";
+import { useEffect, useRef } from "react";
+import { useMutation } from "@apollo/client/react";
+import { Auth_Verification } from "../api/mutations";
+import Constants from "expo-constants";
 const HomeScreen = ({ route, navigation }) => {
+  const intervalRef = useRef();
   const user = route.params?.user;
   const handleLogout = async () => {
     await SecureStore.deleteItemAsync("userToken");
+    await SecureStore.deleteItemAsync("createdAt");
     navigation.replace("Login");
   };
+  const APP_SECRET = Constants.expoConfig.extra.APP_SECRET;
+  const [auth, { loading, error }] = useMutation(Auth_Verification);
+  const checkAuth = async () => {
+    const token = await SecureStore.getItemAsync("userToken");
+    if (token) {
+      const { data } = await auth({
+        variables: {
+          appSecret: APP_SECRET,
+          userToken: token,
+        },
+      });
+      console.log("Triggered");
+    }
+  };
+  useEffect(() => {
+    if (user?.createdAt) {
+      const createdMs = new Date(user.createdAt).getTime();
+      const nowMs = Date.now();
+      const elapsedMs = nowMs - createdMs;
+      const remainderMs = 600000 - (elapsedMs % 600000);
+      const firstTimeout = setTimeout(() => {
+        checkAuth();
+        intervalRef.current = setInterval(checkAuth, 600000);
+      }, remainderMs);
+      return () => {
+        clearTimeout(firstTimeout);
+        if (intervalRef.current) clearInterval(intervalRef.current);
+      };
+    }
+  }, [user?.createdAt]);
   return (
     <View style={styles.container}>
       <Text>Welcome, {user?.fullName} </Text>

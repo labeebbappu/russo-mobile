@@ -44,6 +44,7 @@ const LoginScreen = ({ navigation }) => {
       });
       if (data.authLogin.userToken) {
         await SecureStore.setItemAsync("userToken", data.authLogin.userToken);
+        await SecureStore.setItemAsync("createdAt", data.authLogin.createdAt);
         navigation.navigate("Home", { user: data.authLogin });
       }
     } catch (error) {
