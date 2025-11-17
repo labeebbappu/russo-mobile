@@ -6,7 +6,7 @@ import { useMutation } from "@apollo/client/react";
 import { Auth_Verification } from "../api/mutations";
 import Constants from "expo-constants";
 const HomeScreen = ({ route, navigation }) => {
-  const intervalRef = useRef();
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const user = route.params?.user;
   const handleLogout = async () => {
     await SecureStore.deleteItemAsync("userToken");

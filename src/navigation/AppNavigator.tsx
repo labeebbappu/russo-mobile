@@ -17,7 +17,7 @@ const AppNavigator = () => {
         backgroundColor="white"
         translucent={true}
       />
-      <Stack.Navigator initialRouteName="Gateway">
+      <Stack.Navigator id={undefined} initialRouteName="Gateway">
         <Stack.Screen
           name="Gateway"
           component={GatewayScreen}

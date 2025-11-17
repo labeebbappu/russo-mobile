@@ -17,13 +17,20 @@ import Constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
 import * as SecureStore from "expo-secure-store";
 
+interface LoginResponse {
+  authLogin: {
+    userToken: string;
+    createdAt: string;
+  };
+}
+
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [login, { loading, error }] = useMutation(LOGIN_MUTATION);
-  // const APP_SECRET = Constants.expoConfig.extra.APP_SECRET;
-  const APP_SECRET = "J0K1L2M3NA1B2C3D97R8S9T8U1V4E42W3X4Y5Z";
+  const [login, { loading, error }] =
+    useMutation<LoginResponse>(LOGIN_MUTATION);
+  const APP_SECRET = Constants.expoConfig.extra.APP_SECRET;
   const handleLogin = async () => {
     if (!email) {
       Alert.alert("Please enter your email.");

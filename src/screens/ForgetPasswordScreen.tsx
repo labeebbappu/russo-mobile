@@ -1,6 +1,6 @@
-import { Link } from "@react-navigation/native";
 import {
   Alert,
+  Linking,
   Platform,
   ScrollView,
   StyleSheet,
@@ -17,15 +17,28 @@ import Constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
 import { KeyboardAvoidingView } from "react-native";
 
+interface ForgetPasswordResponse {
+  authForgetPasswordRequest: {
+    verificationCode: string;
+  };
+}
+
+interface PasswordResetResponse {
+  authForgetPasswordVerifyAndChange: {
+    fullName: string;
+  };
+}
+
 const ForgetPasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
-  const [sendCode, { loading, error }] = useMutation(Forget_Password);
+  const [sendCode, { loading, error }] =
+    useMutation<ForgetPasswordResponse>(Forget_Password);
   const [showCode, setShowCode] = useState(false);
   const [verificationCode, setVerificationCode] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [reset, { loading: resetLoading, error: resetError }] =
-    useMutation(Reset_Password);
+    useMutation<PasswordResetResponse>(Reset_Password);
   const [localError, setLocalError] = useState("");
   const APP_SECRET = Constants.expoConfig.extra.APP_SECRET;
   const handleCode = async () => {

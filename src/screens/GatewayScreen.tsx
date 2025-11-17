@@ -7,9 +7,16 @@ import { useMutation } from "@apollo/client/react";
 import { Auth_Verification } from "../api/mutations";
 import Constants from "expo-constants";
 
+interface AuthVerificationResponse {
+  authVerify: {
+    userId: string;
+  };
+}
+
 const GatewayScreen = ({ navigation }) => {
   const [showSplash, setShowSplash] = useState(true);
-  const [auth, { loading, error }] = useMutation(Auth_Verification);
+  const [auth, { loading, error }] =
+    useMutation<AuthVerificationResponse>(Auth_Verification);
   const APP_SECRET = Constants.expoConfig.extra.APP_SECRET;
   useEffect(() => {
     if (!showSplash) {

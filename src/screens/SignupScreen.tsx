@@ -1,6 +1,7 @@
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
+  Linking,
   Platform,
   ScrollView,
   StyleSheet,
@@ -10,12 +11,17 @@ import {
 } from "react-native";
 import { View } from "react-native";
 import Colors from "../theme/colors";
-import { Link } from "@react-navigation/native";
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useMutation } from "@apollo/client/react";
 import { Register_Mutation } from "../api/mutations";
 import Constants from "expo-constants";
+
+interface RegistrationResponse {
+  registrationCreate: {
+    id: string;
+  };
+}
 
 const SignupScreen = ({ navigation }) => {
   const [fullName, setFullName] = useState("");
@@ -26,7 +32,8 @@ const SignupScreen = ({ navigation }) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [localError, setLocalError] = useState("");
   const APP_SECRET = Constants.expoConfig.extra.APP_SECRET;
-  const [signup, { loading, error }] = useMutation(Register_Mutation);
+  const [signup, { loading, error }] =
+    useMutation<RegistrationResponse>(Register_Mutation);
   const hanldeSignup = async () => {
     const registrationInput = {
       fullName: fullName,

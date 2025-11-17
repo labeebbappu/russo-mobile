@@ -18,7 +18,7 @@ module.exports = {
     },
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "com.mohamedsuhail065.russomobile", 
+      bundleIdentifier: "com.mohamedsuhail065.russomobile",
     },
     android: {
       package: "com.mohamedsuhail065.russomobile",

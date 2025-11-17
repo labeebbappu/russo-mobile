@@ -1,5 +1,7 @@
 import {
+  ActivityIndicator,
   KeyboardAvoidingView,
+  Linking,
   Platform,
   StyleSheet,
   Text,
@@ -9,20 +11,30 @@ import {
 import { View } from "react-native";
 import Colors from "../theme/colors";
 import { useEffect, useState } from "react";
-import { Link } from "@react-navigation/native";
 import { useMutation } from "@apollo/client/react";
 import { Code_Verification, Resend_Verification } from "../api/mutations";
 import Constants from "expo-constants";
 import { ScrollView } from "react-native";
+
+interface ResendVerificationResponse {
+  registrationResendVerification: boolean;
+}
+
+interface VerifyEmailResponse {
+  registrationVerifyEmail: {
+    id: string;
+  };
+}
 
 const VerificationScreen = ({ route, navigation }) => {
   const [email, setEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
   const [success, setSuccess] = useState(false);
   const primaryEmail = route.params?.primaryEmail;
-  const [resend, { loading, error }] = useMutation(Resend_Verification);
+  const [resend, { loading, error }] =
+    useMutation<ResendVerificationResponse>(Resend_Verification);
   const [verify, { loading: codeLoading, error: codeError }] =
-    useMutation(Code_Verification);
+    useMutation<VerifyEmailResponse>(Code_Verification);
   const APP_SECRET = Constants.expoConfig.extra.APP_SECRET;
   const resendSuccess = "Code resent successfully";
   useEffect(() => {
