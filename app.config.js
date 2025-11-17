@@ -30,6 +30,7 @@ module.exports = {
     },
     web: {
       favicon: "./assets/favicon.png",
+      bundler: "metro",
     },
     plugins: ["expo-secure-store"],
     extra: {

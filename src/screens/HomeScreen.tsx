@@ -45,7 +45,9 @@ const HomeScreen = ({ route, navigation }) => {
   }, [user?.createdAt]);
   return (
     <View style={styles.container}>
-      <Text>Welcome, {user?.fullName} </Text>
+      <Text>
+        Welcome, {user?.fullName}{" "}
+      </Text>
       <Text>Role:{user?.role}</Text>
       <Text>userId:{user?.userId}</Text>
       <Text>username:{user?.username}</Text>
