@@ -45,9 +45,7 @@ const HomeScreen = ({ route, navigation }) => {
   }, [user?.createdAt]);
   return (
     <View style={styles.container}>
-      <Text>
-        Welcome, {user?.fullName}{" "}
-      </Text>
+      <Text>Welcome, {user?.fullName} </Text>
       <Text>Role:{user?.role}</Text>
       <Text>userId:{user?.userId}</Text>
       <Text>username:{user?.username}</Text>
@@ -73,12 +71,16 @@ const HomeScreen = ({ route, navigation }) => {
           minute: "2-digit",
         })}
       </Text>
-      <TouchableOpacity
-        onPress={() => handleLogout()}
-        style={styles.logoutButton}
-      >
-        <Text style={styles.primaryButtonText}>Logout</Text>
-      </TouchableOpacity>
+      <View style={styles.onBoardDiv}>
+        <Text style={styles.heading}>Hop Aboard!</Text>
+        <Text style={styles.content}>
+          To make things work smoothly for you, we just need a quick hello (your
+          contact info) and the essentials for your account!
+        </Text>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Start Onboarding</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -103,5 +105,31 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 500,
     color: "white",
+  },
+  onBoardDiv: {
+    alignItems: "center",
+    marginTop: 44,
+    backgroundColor: Colors.mintGreen,
+    padding: 12,
+    gap: 12,
+  },
+  heading: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: Colors.charcoal,
+  },
+  content: {
+    textAlign: "center",
+    color: Colors.charcoal,
+    fontSize: 16,
+  },
+  button: {
+    backgroundColor: Colors.russoGreen,
+    padding: 12,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

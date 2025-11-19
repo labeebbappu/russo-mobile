@@ -7,6 +7,8 @@ import GatewayScreen from "../screens/GatewayScreen";
 import SignupScreen from "../screens/SignupScreen";
 import VerificationScreen from "../screens/VerificationScreen";
 import ForgetPasswordScreen from "../screens/ForgetPasswordScreen";
+import CustomHeader from "src/components/CustomHeader";
+
 
 const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
@@ -36,7 +38,7 @@ const AppNavigator = () => {
           name="Home"
           component={HomeScreen}
           options={{
-            headerShown: false,
+            header: (props) => <CustomHeader {...props} title="Home" />,
           }}
         />
         <Stack.Screen
