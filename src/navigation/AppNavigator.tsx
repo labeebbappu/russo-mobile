@@ -8,7 +8,8 @@ import SignupScreen from "../screens/SignupScreen";
 import VerificationScreen from "../screens/VerificationScreen";
 import ForgetPasswordScreen from "../screens/ForgetPasswordScreen";
 import CustomHeader from "src/components/CustomHeader";
-
+import OnboardingScreen from "src/screens/OnboardingScreen";
+import AppUserHomeScreen from "src/screens/AppUserHomeScreen";
 
 const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
@@ -60,6 +61,24 @@ const AppNavigator = () => {
           component={ForgetPasswordScreen}
           options={{
             headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Onboarding"
+          component={OnboardingScreen}
+          options={{
+            header: (props) => (
+              <CustomHeader {...props} title="Customer Onboarding" />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="AppUserHome"
+          component={AppUserHomeScreen}
+          options={{
+            header: (props) => (
+              <CustomHeader {...props} title="App User Home" />
+            ),
           }}
         />
       </Stack.Navigator>

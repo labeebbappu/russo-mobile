@@ -9,7 +9,7 @@ import Constants from "expo-constants";
 
 interface AuthVerificationResponse {
   authVerify: {
-    userId: string;
+    role: string;
   };
 }
 
@@ -28,10 +28,10 @@ const GatewayScreen = ({ navigation }) => {
               variables: { appSecret: APP_SECRET, userToken: token },
             });
             console.log("AuthVerify response:", data);
-            if (data?.authVerify?.userId) {
-              navigation.replace("Home", { user: data.authVerify });
+            if (data?.authVerify?.role === "app-user") {
+              navigation.replace("AppUserHome", { user: data.authVerify });
             } else {
-              navigation.replace("Login");
+              navigation.replace("Home", { user: data.authVerify });
             }
           } else {
             navigation.replace("Login");

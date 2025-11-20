@@ -131,3 +131,52 @@ export const Reset_Password = gql`
     }
   }
 `;
+
+export const Customer_Onboarding = gql`
+  mutation AdminCustomerOnboarding(
+    $userToken: String!
+    $name: String!
+    $customerType: String!
+    $billingAddressName: String!
+    $billingAddressEmail: String!
+    $adminAppId: String!
+    $fullName: String!
+    $designation: String!
+    $contactEmail: String!
+    $address: String
+    $city: String
+    $country: String
+    $primaryCurrency: String
+    $officeMobile: String
+    $appAccountTitle: String
+  ) {
+    adminCustomerOnboarding(
+      userToken: $userToken
+      name: $name
+      customerType: $customerType
+      billingAddressName: $billingAddressName
+      billingAddressEmail: $billingAddressEmail
+      adminAppId: $adminAppId
+      fullName: $fullName
+      designation: $designation
+      contactEmail: $contactEmail
+      address: $address
+      city: $city
+      country: $country
+      primaryCurrency: $primaryCurrency
+      officeMobile: $officeMobile
+      appAccountTitle: $appAccountTitle
+    ) {
+      id
+      name
+      note
+      logoUrl
+      status
+      actionById
+      actionByName
+      createdAt
+      updatedAt
+      isDeleted
+    }
+  }
+`;

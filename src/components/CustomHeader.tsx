@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, StackActions } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useMutation } from "@apollo/client/react";
 import { Auth_Verification } from "src/api/mutations";
@@ -108,7 +108,7 @@ const CustomHeader = ({ title = "Home" }) => {
                 await SecureStore.deleteItemAsync("userToken");
                 await SecureStore.deleteItemAsync("createdAt");
                 setLogoutVisible(false);
-                navigation.replace("Login");
+                navigation.dispatch(StackActions.replace("Login"));
               }}
             >
               <Text
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     color: "#293D34",
     fontWeight: "bold",
     fontSize: 16,
-    textAlign:"center"
+    textAlign: "center",
   },
 });
 

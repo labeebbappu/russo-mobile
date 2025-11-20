@@ -21,6 +21,7 @@ interface LoginResponse {
   authLogin: {
     userToken: string;
     createdAt: string;
+    role: string;
   };
 }
 
@@ -49,10 +50,14 @@ const LoginScreen = ({ navigation }) => {
           password: password,
         },
       });
-      if (data.authLogin.userToken) {
+      if (data.authLogin.role === "app-user") {
         await SecureStore.setItemAsync("userToken", data.authLogin.userToken);
         await SecureStore.setItemAsync("createdAt", data.authLogin.createdAt);
-        navigation.navigate("Home", { user: data.authLogin });
+        navigation.replace("AppUserHome", { user: data.authLogin });
+      } else {
+        await SecureStore.setItemAsync("userToken", data.authLogin.userToken);
+        await SecureStore.setItemAsync("createdAt", data.authLogin.createdAt);
+        navigation.replace("Home", { user: data.authLogin });
       }
     } catch (error) {
       console.log(error);

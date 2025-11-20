@@ -77,7 +77,15 @@ const HomeScreen = ({ route, navigation }) => {
           To make things work smoothly for you, we just need a quick hello (your
           contact info) and the essentials for your account!
         </Text>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() =>
+            navigation.navigate("Onboarding", {
+              email: user?.username,
+              fullName: user?.fullName,
+            })
+          }
+        >
           <Text style={styles.buttonText}>Start Onboarding</Text>
         </TouchableOpacity>
       </View>

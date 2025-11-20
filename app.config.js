@@ -36,6 +36,7 @@ module.exports = {
     extra: {
       GRAPHQL_URL: process.env.GRAPHQL_URL,
       APP_SECRET: process.env.APP_SECRET,
+      ADMIN_APP_ID: process.env.ADMIN_APP_ID,
       eas: {
         projectId: "5cc9266f-9dc4-486b-8e3c-82f8e181e0e8",
       },
