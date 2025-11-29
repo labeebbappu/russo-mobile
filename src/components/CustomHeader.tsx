@@ -25,7 +25,8 @@ const CustomHeader = ({ title = "Home" }) => {
     useMutation<AuthResponse>(Auth_Verification);
   const APP_SECRET = Constants.expoConfig.extra.APP_SECRET;
   const checkAuth = async () => {
-    const token = await SecureStore.getItemAsync("userToken");
+    const data = await SecureStore.getItemAsync("userData");
+    const token = data ? JSON.parse(data).userToken : null;
     if (token) {
       const { data } = await auth({
         variables: {

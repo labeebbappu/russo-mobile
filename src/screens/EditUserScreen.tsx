@@ -62,8 +62,9 @@ const EditUserScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     const getToken = async () => {
-      const token = await SecureStore.getItemAsync("userToken");
-      setUserToken(token);
+      const data = await SecureStore.getItemAsync("userData");
+      const token = data ? JSON.parse(data) : null;
+      setUserToken(token.userToken);
     };
     getToken();
   }, []);

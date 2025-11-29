@@ -16,7 +16,8 @@ const HomeScreen = ({ route, navigation }) => {
   const APP_SECRET = Constants.expoConfig.extra.APP_SECRET;
   const [auth, { loading, error }] = useMutation(Auth_Verification);
   const checkAuth = async () => {
-    const token = await SecureStore.getItemAsync("userToken");
+    const data = await SecureStore.getItemAsync("userData");
+    const token = data ? JSON.parse(data) : null;
     if (token) {
       const { data } = await auth({
         variables: {
