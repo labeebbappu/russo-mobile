@@ -180,3 +180,57 @@ export const Customer_Onboarding = gql`
     }
   }
 `;
+
+export const UPDATE_APP_ACCOUNT = gql`
+  mutation AppAccountUpdate(
+    $userToken: String!
+    $appAccountUpdateId: ID!
+    $title: String
+  ) {
+    appAccountUpdate(
+      userToken: $userToken
+      id: $appAccountUpdateId
+      title: $title
+    ) {
+      id
+      adminAppName
+      adminAppId
+      adminCustomerId
+      adminCustomerName
+      title
+      status
+      actionById
+      actionByName
+      createdAt
+      updatedAt
+      isDeleted
+    }
+  }
+`;
+
+export const CREATE_APP_ACCOUNT = gql`
+  mutation AppAccountCreateByUser(
+    $userToken: String!
+    $adminAppId: ID!
+    $title: String
+  ) {
+    appAccountCreateByUser(
+      userToken: $userToken
+      adminAppId: $adminAppId
+      title: $title
+    ) {
+      id
+      adminAppName
+      adminAppId
+      adminCustomerId
+      adminCustomerName
+      title
+      status
+      actionById
+      actionByName
+      createdAt
+      updatedAt
+      isDeleted
+    }
+  }
+`;

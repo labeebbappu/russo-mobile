@@ -9,8 +9,7 @@ import {
   View,
 } from "react-native";
 import Colors from "../theme/colors";
-import { Link } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useMutation } from "@apollo/client/react";
 import { LOGIN_MUTATION } from "../api/mutations";
 import Constants from "expo-constants";
@@ -51,12 +50,16 @@ const LoginScreen = ({ navigation }) => {
         },
       });
       if (data.authLogin.role === "app-user") {
-        await SecureStore.setItemAsync("userToken", data.authLogin.userToken);
-        await SecureStore.setItemAsync("createdAt", data.authLogin.createdAt);
+        await SecureStore.setItemAsync(
+          "userData",
+          JSON.stringify(data.authLogin)
+        );
         navigation.replace("AppUserHome", { user: data.authLogin });
       } else {
-        await SecureStore.setItemAsync("userToken", data.authLogin.userToken);
-        await SecureStore.setItemAsync("createdAt", data.authLogin.createdAt);
+        await SecureStore.setItemAsync(
+          "userData",
+          JSON.stringify(data.authLogin)
+        );
         navigation.replace("Home", { user: data.authLogin });
       }
     } catch (error) {
