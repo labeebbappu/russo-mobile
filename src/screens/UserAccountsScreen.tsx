@@ -15,7 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import * as SecureStore from "expo-secure-store";
 import BottomNavigation from "src/components/BottomNavigation";
 
-const UsersList = ({ navigation, route }) => {
+const UserAccounts = ({ navigation, route }) => {
   interface AppAccount {
     id: string;
     adminAppName: string;
@@ -144,7 +144,7 @@ const UsersList = ({ navigation, route }) => {
             navigation.navigate("EditUser", { onSuccess: refetch })
           }
         >
-          <Text style={styles.addButton}>+ Add User</Text>
+          <Text style={styles.addButton}>+ Add Account</Text>
         </TouchableOpacity>
         <FlatList
           data={accounts}
@@ -165,7 +165,7 @@ const UsersList = ({ navigation, route }) => {
   );
 };
 
-export default UsersList;
+export default UserAccounts;
 
 const styles = StyleSheet.create({
   container: {
@@ -182,12 +182,11 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   addButton: {
-    padding: 5,
+    padding: 10,
     backgroundColor: Colors.russoGreen,
     color: "white",
     fontSize: 16,
     fontWeight: 700,
-    width: 100,
     marginHorizontal: 16,
     borderRadius: 6,
     marginTop: 12,

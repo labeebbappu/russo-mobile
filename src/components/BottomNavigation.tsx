@@ -9,7 +9,7 @@ const TAB_CONFIG = [
     icon: "home",
     label: "Home",
   },
-  { route: "UsersList", icon: "people-sharp", label: "Users" },
+  { route: "UsersList", icon: "people-sharp", label: "Accounts" },
 ];
 
 const BottomNavigation = () => {

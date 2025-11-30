@@ -47,7 +47,7 @@ interface AccountFormValues {
   title: string;
 }
 
-const EditUserScreen = ({ route, navigation }) => {
+const EditUserAccount= ({ route, navigation }) => {
   const account = route.params?.account;
   const onSuccess = route.params?.onSuccess;
   const isEditMode = !!account;
@@ -230,7 +230,7 @@ const EditUserScreen = ({ route, navigation }) => {
   );
 };
 
-export default EditUserScreen;
+export default EditUserAccount;
 
 const styles = StyleSheet.create({
   container: {
