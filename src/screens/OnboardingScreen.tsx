@@ -90,7 +90,6 @@ const OnboardingScreen = ({ route, navigation }) => {
                 appAccountTitle: values.name,
               },
             });
-            console.log(data);
             if (data.adminCustomerOnboarding.id) {
               navigation.replace("AppUserHome");
             }

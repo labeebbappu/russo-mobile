@@ -41,7 +41,7 @@ const UserAccounts = ({ navigation, route }) => {
   }
   const APP_ID = Constants.expoConfig.extra.ADMIN_APP_ID;
   const [dataStored, setDataStored] = useState<UserData>({
-    userToken: "",
+    userToken: "",  
     userId: "",
   });
 
@@ -50,7 +50,6 @@ const UserAccounts = ({ navigation, route }) => {
       const storedData = await SecureStore.getItemAsync("userData");
       if (storedData) {
         const parsedData = JSON.parse(storedData);
-        console.log("Parsed Data:", parsedData);
         setDataStored(parsedData);
       }
     };
@@ -101,7 +100,7 @@ const UserAccounts = ({ navigation, route }) => {
     <TouchableOpacity
       style={styles.accountCard}
       onPress={() =>
-        navigation.navigate("AccountDetail", { accountId: item.id })
+        navigation.navigate("UsersList", { accountId: item.id })
       }
     >
       <View style={styles.cardHeader}>
@@ -195,7 +194,7 @@ const styles = StyleSheet.create({
   accountCard: {
     backgroundColor: "white",
     padding: 16,
-    marginBottom: 12,
+    marginBottom: 8,
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },

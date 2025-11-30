@@ -26,3 +26,36 @@ export const GetAppUsers = gql`
     }
   }
 `;
+
+export const Get_App_Account_Users = gql`
+  query AppAccountUsersGetPagedDataByAccountUser(
+    $appAccountUsersGetPagedDataByAccountUserUserToken2: String!
+    $appAccountId: String!
+  ) {
+    appAccountUsersGetPagedDataByAccountUser(
+      userToken: $appAccountUsersGetPagedDataByAccountUserUserToken2
+      appAccountId: $appAccountId
+    ) {
+      id
+      adminAppId
+      adminAppName
+      adminCustomerId
+      adminCustomerName
+      appAccountId
+      appAccountTitle
+      userFullName
+      userEmail
+      contactNumber
+      userRole
+      assignedGroupId
+      note
+      loginUserId
+      status
+      actionById
+      actionByName
+      createdAt
+      updatedAt
+      isDeleted
+    }
+  }
+`;

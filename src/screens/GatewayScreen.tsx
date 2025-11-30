@@ -28,7 +28,6 @@ const GatewayScreen = ({ navigation }) => {
             const { data } = await auth({
               variables: { appSecret: APP_SECRET, userToken: token },
             });
-            console.log("AuthVerify response:", data);
             if (data?.authVerify?.role === "app-user") {
               navigation.replace("AppUserHome", { user: data.authVerify });
             } else {
@@ -38,7 +37,6 @@ const GatewayScreen = ({ navigation }) => {
             navigation.replace("Login");
           }
         } catch (err) {
-          console.log("Auth check error:", err);
           navigation.replace("Login");
         }
       };

@@ -8,8 +8,14 @@ const TAB_CONFIG = [
     route: "AppUserHome",
     icon: "home",
     label: "Home",
+    matchRoutes: ["AppUserHome"],
   },
-  { route: "UsersList", icon: "people-sharp", label: "Accounts" },
+  {
+    route: "AccountsStack",
+    icon: "people-sharp",
+    label: "Accounts",
+    matchRoutes: ["AccountsStack", "AccountsList", "EditUser", "UsersList"],
+  },
 ];
 
 const BottomNavigation = () => {
@@ -18,7 +24,7 @@ const BottomNavigation = () => {
   return (
     <View style={styles.tabContainer}>
       {TAB_CONFIG.map((tab) => {
-        const focused = route.name === tab.route;
+        const focused = tab.matchRoutes.includes(route.name);
         return (
           <TouchableOpacity
             key={tab.route}

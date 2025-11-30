@@ -52,7 +52,6 @@ const SignupScreen = ({ navigation }) => {
           registrationInput: registrationInput,
         },
       });
-      console.log(data);
       if (data.registrationCreate.id) {
         navigation.navigate("Verification", { primaryEmail: email });
       }

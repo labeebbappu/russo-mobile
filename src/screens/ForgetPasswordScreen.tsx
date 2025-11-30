@@ -48,7 +48,6 @@ const ForgetPasswordScreen = ({ navigation }) => {
         username: email,
       },
     });
-    console.log(data);
     if (data.authForgetPasswordRequest.verificationCode) {
       setShowCode(true);
     }

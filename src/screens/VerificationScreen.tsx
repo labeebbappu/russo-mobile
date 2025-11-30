@@ -66,7 +66,6 @@ const VerificationScreen = ({ route, navigation }) => {
           verificationCode: verificationCode,
         },
       });
-      console.log(data);
       if (data.registrationVerifyEmail.id) {
         navigation.replace("Login");
       }

@@ -10,8 +10,9 @@ import ForgetPasswordScreen from "../screens/ForgetPasswordScreen";
 import CustomHeader from "src/components/CustomHeader";
 import OnboardingScreen from "src/screens/OnboardingScreen";
 import AppUserHomeScreen from "src/screens/AppUserHomeScreen";
-import UserAccounts from "src/screens/UserAccountsScreen";
+import UserAccounts from "src/screens/AccountsScreen";
 import EditUserAccount from "src/screens/EditAccountScreen";
+import UsersList from "src/screens/UsersList";
 
 const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
@@ -84,17 +85,10 @@ const AppNavigator = () => {
           }}
         />
         <Stack.Screen
-          name="UsersList"
-          component={UserAccounts}
+          name="AccountsStack"
+          component={AccountsStackNavigator}
           options={{
-            header: (props) => <CustomHeader {...props} title="Accounts" />,
-          }}
-        />
-        <Stack.Screen
-          name="EditUser"
-          component={EditUserAccount}
-          options={{
-            header: (props) => <CustomHeader {...props} title="Accounts" />,
+            headerShown: false,
           }}
         />
       </Stack.Navigator>
@@ -103,3 +97,31 @@ const AppNavigator = () => {
 };
 
 export default AppNavigator;
+
+const AccountsStackNavigator = () => {
+  return (
+    <Stack.Navigator id={undefined}>
+      <Stack.Screen
+        name="AccountsList"
+        component={UserAccounts}
+        options={{
+          header: (props) => <CustomHeader {...props} title="Accounts" />,
+        }}
+      />
+      <Stack.Screen
+        name="EditUser"
+        component={EditUserAccount}
+        options={{
+          header: (props) => <CustomHeader {...props} title="Accounts" />,
+        }}
+      />
+      <Stack.Screen
+        name="UsersList"
+        component={UsersList}
+        options={{
+          header: (props) => <CustomHeader {...props} title="Users" />,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
