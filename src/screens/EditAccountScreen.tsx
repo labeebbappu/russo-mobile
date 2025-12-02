@@ -13,19 +13,11 @@ import {
 } from "react-native";
 import { Formik } from "formik";
 import * as SecureStore from "expo-secure-store";
-import { gql } from "@apollo/client";
 import Colors from "src/theme/colors";
 import { CREATE_APP_ACCOUNT, UPDATE_APP_ACCOUNT } from "src/api/mutations";
 import { useMutation } from "@apollo/client/react";
 import BottomNavigation from "src/components/BottomNavigation";
 import Constants from "expo-constants";
-
-interface AppAccount {
-  account: {
-    title: string;
-    id: string;
-  };
-}
 
 interface EditAccountValues {
   title: string;
@@ -47,9 +39,8 @@ interface AccountFormValues {
   title: string;
 }
 
-const EditUserAccount= ({ route, navigation }) => {
+const EditUserAccount = ({ route, navigation }) => {
   const account = route.params?.account;
-  const onSuccess = route.params?.onSuccess;
   const isEditMode = !!account;
   const ADMIN_APP_ID = Constants.expoConfig?.extra?.ADMIN_APP_ID;
   const [userToken, setUserToken] = useState<string | null>(null);
@@ -93,9 +84,6 @@ const EditUserAccount= ({ route, navigation }) => {
         });
 
         if (data?.appAccountUpdate) {
-          if (onSuccess) {
-            onSuccess();
-          }
           Alert.alert("Success", "Account updated successfully", [
             {
               text: "OK",
@@ -104,7 +92,6 @@ const EditUserAccount= ({ route, navigation }) => {
           ]);
         }
       } else {
-        // Create new account
         const { data } = await createAccount({
           variables: {
             userToken,
@@ -114,9 +101,6 @@ const EditUserAccount= ({ route, navigation }) => {
         });
 
         if (data?.appAccountCreateByUser) {
-          if (onSuccess) {
-            onSuccess();
-          }
           Alert.alert("Success", "Account created successfully", [
             {
               text: "OK",

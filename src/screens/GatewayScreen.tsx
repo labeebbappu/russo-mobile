@@ -24,6 +24,7 @@ const GatewayScreen = ({ navigation }) => {
         try {
           const data = await SecureStore.getItemAsync("userData");
           const token = data ? JSON.parse(data).userToken : null;
+          console.log(token)
           if (token) {
             const { data } = await auth({
               variables: { appSecret: APP_SECRET, userToken: token },

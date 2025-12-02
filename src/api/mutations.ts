@@ -234,3 +234,89 @@ export const CREATE_APP_ACCOUNT = gql`
     }
   }
 `;
+
+export const CREATE_ACCOUNT_USER = gql`
+  mutation AppAccountUsersCreateByAccountUser(
+    $userToken: String!
+    $appAccountId: ID!
+    $contactNumber: String!
+    $userEmail: String
+    $userFullName: String
+    $userRole: String
+    $note: String
+  ) {
+    appAccountUsersCreateByAccountUser(
+      userToken: $userToken
+      appAccountId: $appAccountId
+      contactNumber: $contactNumber
+      userEmail: $userEmail
+      userFullName: $userFullName
+      userRole: $userRole
+      note: $note
+    ) {
+      id
+      adminAppId
+      adminAppName
+      adminCustomerId
+      adminCustomerName
+      appAccountId
+      appAccountTitle
+      userFullName
+      userEmail
+      contactNumber
+      userRole
+      assignedGroupId
+      note
+      loginUserId
+      status
+      actionById
+      actionByName
+      createdAt
+      updatedAt
+      isDeleted
+    }
+  }
+`;
+
+export const UPDATE_ACCOUNT_USER = gql`
+  mutation AppAccountUsersUpdate(
+    $userToken: String!
+    $appAccountUsersUpdateId: ID!
+    $userFullName: String
+    $userEmail: String
+    $contactNumber: String
+    $userRole: String
+    $note: String
+  ) {
+    appAccountUsersUpdate(
+      userToken: $userToken
+      id: $appAccountUsersUpdateId
+      userFullName: $userFullName
+      userEmail: $userEmail
+      contactNumber: $contactNumber
+      userRole: $userRole
+      note: $note
+    ) {
+      id
+      adminAppId
+      adminAppName
+      adminCustomerId
+      adminCustomerName
+      appAccountId
+      appAccountTitle
+      userFullName
+      userEmail
+      contactNumber
+      userRole
+      assignedGroupId
+      note
+      loginUserId
+      status
+      actionById
+      actionByName
+      createdAt
+      updatedAt
+      isDeleted
+    }
+  }
+`;

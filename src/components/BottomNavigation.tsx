@@ -14,7 +14,7 @@ const TAB_CONFIG = [
     route: "AccountsStack",
     icon: "people-sharp",
     label: "Accounts",
-    matchRoutes: ["AccountsStack", "AccountsList", "EditUser", "UsersList"],
+    matchRoutes: ["AccountsStack", "AccountsList", "EditAccount", "UsersList"],
   },
 ];
 

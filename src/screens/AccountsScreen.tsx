@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client/react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -14,6 +14,7 @@ import Constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
 import * as SecureStore from "expo-secure-store";
 import BottomNavigation from "src/components/BottomNavigation";
+import { useFocusEffect } from "@react-navigation/native";
 
 const UserAccounts = ({ navigation, route }) => {
   interface AppAccount {
@@ -41,7 +42,7 @@ const UserAccounts = ({ navigation, route }) => {
   }
   const APP_ID = Constants.expoConfig.extra.ADMIN_APP_ID;
   const [dataStored, setDataStored] = useState<UserData>({
-    userToken: "",  
+    userToken: "",
     userId: "",
   });
 
@@ -67,8 +68,16 @@ const UserAccounts = ({ navigation, route }) => {
     }
   );
 
+  useFocusEffect(
+    useCallback(() => {
+      if (dataStored.userToken && dataStored.userId) {
+        refetch();
+      }
+    }, [dataStored.userToken, dataStored.userId, refetch])
+  );
+
   const handleEdit = (account: AppAccount) => {
-    navigation.navigate("EditUser", { account, onSuccess: refetch });
+    navigation.navigate("EditAccount", { account });
   };
 
   if (loading) {
@@ -99,9 +108,7 @@ const UserAccounts = ({ navigation, route }) => {
   const renderAccount = ({ item }: { item: AppAccount }) => (
     <TouchableOpacity
       style={styles.accountCard}
-      onPress={() =>
-        navigation.navigate("UsersList", { accountId: item.id })
-      }
+      onPress={() => navigation.navigate("UsersList", { accountId: item.id })}
     >
       <View style={styles.cardHeader}>
         <Text style={styles.accountTitle}>Account : {item.title}</Text>
@@ -140,7 +147,7 @@ const UserAccounts = ({ navigation, route }) => {
       <View style={styles.container} className="flex-col">
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("EditUser", { onSuccess: refetch })
+            navigation.navigate("EditAccount")
           }
         >
           <Text style={styles.addButton}>+ Add Account</Text>

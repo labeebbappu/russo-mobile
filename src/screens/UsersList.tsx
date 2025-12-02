@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -13,6 +13,7 @@ import { useQuery } from "@apollo/client/react";
 import { Get_App_Account_Users } from "src/api/queries";
 import { Ionicons } from "@expo/vector-icons";
 import BottomNavigation from "src/components/BottomNavigation";
+import { useFocusEffect } from "@react-navigation/native";
 
 interface UserData {
   userToken: string;
@@ -75,8 +76,16 @@ const UsersList = ({ navigation, route }) => {
     }
   );
 
+  useFocusEffect(
+    useCallback(() => {
+      if (dataStored.userToken && dataStored.userId) {
+        refetch();
+      }
+    }, [dataStored.userToken, dataStored.userId, refetch])
+  );
+
   const handleEdit = (user: AppUsers) => {
-    navigation.navigate("EditUser", { user, onSuccess: refetch });
+    navigation.navigate("EditUser", { user });
   };
 
   if (loading) {
@@ -107,7 +116,7 @@ const UsersList = ({ navigation, route }) => {
   const renderAccount = ({ item }: { item: AppUsers }) => (
     <TouchableOpacity
       style={styles.accountCard}
-    //   onPress={() => navigation.navigate("UsersList", { accountId: item.id })}
+      //   onPress={() => navigation.navigate("UsersList", { accountId: item.id })}
     >
       <View style={styles.cardHeader}>
         <Text style={styles.accountTitle}>Full Name : {item.userFullName}</Text>
@@ -147,9 +156,7 @@ const UsersList = ({ navigation, route }) => {
     <>
       <View style={styles.container} className="flex-col">
         <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("EditUser", { onSuccess: refetch })
-          }
+          onPress={() => navigation.navigate("EditUser", { accountId: userId })}
         >
           <Text style={styles.addButton}>+ Add User</Text>
         </TouchableOpacity>

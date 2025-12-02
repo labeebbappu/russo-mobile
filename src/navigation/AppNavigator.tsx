@@ -13,6 +13,7 @@ import AppUserHomeScreen from "src/screens/AppUserHomeScreen";
 import UserAccounts from "src/screens/AccountsScreen";
 import EditUserAccount from "src/screens/EditAccountScreen";
 import UsersList from "src/screens/UsersList";
+import UserEditScreen from "src/screens/UserEditScreen";
 
 const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
@@ -109,7 +110,7 @@ const AccountsStackNavigator = () => {
         }}
       />
       <Stack.Screen
-        name="EditUser"
+        name="EditAccount"
         component={EditUserAccount}
         options={{
           header: (props) => <CustomHeader {...props} title="Accounts" />,
@@ -118,6 +119,13 @@ const AccountsStackNavigator = () => {
       <Stack.Screen
         name="UsersList"
         component={UsersList}
+        options={{
+          header: (props) => <CustomHeader {...props} title="Users" />,
+        }}
+      />
+      <Stack.Screen
+        name="EditUser"
+        component={UserEditScreen}
         options={{
           header: (props) => <CustomHeader {...props} title="Users" />,
         }}
