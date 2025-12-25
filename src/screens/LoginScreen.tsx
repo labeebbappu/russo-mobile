@@ -195,12 +195,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
   },
-  primaryButtonText: {
-    textAlign: "center",
-    fontSize: 18,
-    fontWeight: 500,
-    color: "white",
-  },
+    primaryButtonText: {
+      textAlign: "center",
+      fontSize: 18,
+      fontWeight: 500,
+      color: "white",
+    },
   secondaryButtonText: {
     textAlign: "center",
     fontSize: 18,
